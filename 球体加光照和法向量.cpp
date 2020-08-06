@@ -5,11 +5,16 @@
 #include"math.h"
 float angle=0;
 float angle2=0;
+
 //初始化OpenGL
 #define pi 3.1415926
 #define SOLID 3000
 #define WIRE  3001
 typedef int SPHERE_MODE;
+/** 再定义一个默认的光源 */
+static float diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f };	 
+static float specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };	 
+static float lightPosition[] = { 10.0f, 0.0f,  0.0f, 0.0f };
 
 typedef struct Point3f
 {
@@ -18,10 +23,49 @@ typedef struct Point3f
  GLfloat z;
 }point;
 
+void CalculateNormal(GLdouble *dVertex1, 
+			GLdouble *dVertex2, GLdouble *dVertex3, 
+			GLdouble *dNormal)
+{
+	GLdouble dVector1[3],dVector2[3];
+	dVector1[0]=dVertex2[0]-dVertex1[0];
+	dVector1[1]=dVertex2[1]-dVertex1[1];
+	dVector1[2]=dVertex2[2]-dVertex1[2];
+	dVector2[0]=dVertex3[0]-dVertex1[0];
+	dVector2[1]=dVertex3[1]-dVertex1[1];
+	dVector2[2]=dVertex3[2]-dVertex1[2];
+
+	dNormal[0]=dVector1[1]*dVector2[2]-dVector1[2]*dVector2[1];
+	dNormal[1]=dVector1[2]*dVector2[0]-dVector1[0]*dVector2[2];
+	dNormal[2]=dVector1[0]*dVector2[1]-dVector1[1]*dVector2[0];
+
+	double dNormalLength=sqrt(dNormal[0]*dNormal[0]
+			+dNormal[1]*dNormal[1]+dNormal[2]*dNormal[2]);
+	if(dNormalLength!=0.0)
+	{
+		dNormal[0]=dNormal[0]/dNormalLength;
+		dNormal[1]=dNormal[1]/dNormalLength;
+		dNormal[2]=dNormal[2]/dNormalLength;
+	}
+	else
+	{
+		dNormal[0]=0.0;
+		dNormal[1]=0.0;
+		dNormal[2]=1.0;
+	}
+
+}
+
 void init(void) 
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);//设置背景颜色
 	glShadeModel(GL_SMOOTH);//设置明暗处理,有两种选择模式：GL_FLAT（不渐变）和GL_SMOOTH（渐变过渡）
+	/** 设置0号光源 */
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0); /**< 启用0号灰色光源,让物体可见 */
 }
 
 //根据半径radius，a角（半径与Z轴正向的夹角），b角（半径在xy平面的投影与x轴正向的夹角）算出球面上点的坐标并记录到point类型的参数p中。
@@ -52,6 +96,9 @@ point* getPointMatrix(GLfloat radius,GLint slices)
 //根据实际调用时提供的4个点的坐标在空间画四边形，并用mode参数确定所画四边形是空心还是实心的。
 void drawSlice(point &p1,point &p2,point &p3,point &p4,SPHERE_MODE mode)
 {
+	 
+double dPoint1[3],dPoint2[3],dPoint3[3];
+	double dNormal[3];
  switch(mode)
  {
  case SOLID:
@@ -61,7 +108,12 @@ void drawSlice(point &p1,point &p2,point &p3,point &p4,SPHERE_MODE mode)
   glBegin(GL_LINE_LOOP);
   break;
  }
- glColor3f(1,0,0);
+ dPoint1[0]=p1.x;	 dPoint1[1]=p1.y;  dPoint1[2]=p1.z;
+	dPoint2[0]=p2.x;	 dPoint2[1]=p2.y; dPoint2[2]=p2.z;
+	dPoint3[0]=p3.x;	 dPoint3[1]=p3.y; dPoint3[2]=p3.z;
+	CalculateNormal(dPoint1,dPoint2,dPoint3,dNormal);
+	glNormal3dv(dNormal);
+ //glColor3f(1,0,0);
  glVertex3f(p1.x,p1.y,p1.z);
  glVertex3f(p2.x,p2.y,p2.z);
  glVertex3f(p3.x,p3.y,p3.z);
@@ -84,45 +136,7 @@ int drawSphere(GLfloat radius,GLint slices,SPHERE_MODE mode)
  free(mx);
  return 1;
 }
-void Drawpic()
-{
-		/** 太阳 */
 
-	
-	glPushMatrix();	
-	
-	  glColor3f(1.0f, 0.0f, 0.0f);	/**< 红色 */
-	  glutWireSphere(1.0,20,20);
-		
-	glPopMatrix();
-
-  	
-
- /** 绘制地球 */
-	glPushMatrix();
-  		glRotatef(angle, 0.0f, 0.0f, 1.0f);
-		glTranslatef(3.0,0.0,0.0);	
-	    glColor3f(0.0f, 0.0f, 1.0f);
-		glutWireSphere(0.5,20,20);
-		
-    glPushMatrix();
-	
- /** 绘制月亮 */
-		glRotatef(angle2, 0.0f, 0.0f, 1.0f);
-	
-		glTranslatef(1.0,0.0,0.0);
-		
-		glColor3f(1.0f, 1.0f, 0.0f);
-		glutWireSphere(0.2,20,20);
-		
-
-	glPopMatrix();
-
-	glPopMatrix();
- 
-	glFlush();		
-
-}
 //主要的绘制过程
 void display(void)
 {
@@ -132,13 +146,13 @@ void display(void)
      glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity();
 
-	
 	glTranslatef(0,0,-6);
-	glRotatef(angle, 1.0f, 1.0f, 1.0f);
-//	glColor3f(1.0,0,0);
-drawSphere(2,50,3001);
-//	Drawpic();
+	glRotatef(angle2, 0.0f, 1.0f, 0.0f);
+//	glColor3f(1.0,1,1);
+drawSphere(2,50,3000);
+
     glFlush();
+	glutSwapBuffers();
 }
 //在窗口改变大小时调用
 void reshape(int w, int h){
@@ -151,6 +165,7 @@ void reshape(int w, int h){
 }
 void TimerFunction(int value)
 {
+
     angle+=10;
 	if(angle==360)
 		angle=0;
