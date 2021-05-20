@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Website Landing Page Design</title>
+    <link rel="stylesheet" href="index1.css">
+</head>
+<body>
+    <section class="header">
+      <a href="#" class="logo"><h2>Travel</h2></a>
+      <div class="toggle"><img src="./image1/toggle.png" alt=""></div>
+    </section>
+    <section class="banner">
+        <img src="./image1/banner.jpg" class="fitBg" alt="">
+        <div class="content">
+            <h2>Explore The World</h2>
+            <p id="text1">Huangshan: the world cultural and natural heritage, the world geopark, 
+                the national AAAAA level tourist attraction, the national scenic spot, the national 
+                civilized scenic tourist area demonstration site, China's top ten famous mountains, the world's best mountain.
+                Huangshan Mountain is located in Huangshan City, southern Anhui Province. It has 72 peaks, the main one of which is Lianhua Peak 1,864 meters
+                above sea level. Together with Bright Summit and Tiandu Peak, it is one of the three major peaks of Huangshan Mountain. Huangshan is the symbol 
+                 of Anhui tourism. Huangshan Mountain was originally named "Black Mountain", and it is famous for its black peaks and black rocks and the dark sky.
+                  After the legend Xuan Yuan Huang Emperor had alchemy in this, so it was renamed "Huangshan Mountain." The representative landscapes of Huangshan are "Five Wondrous Pines and Three Waterfalls", five wonders: strange pines, grotesque rocks, sea of clouds, 
+                  hot springs and winter snow; Three waterfalls:
+                   herringbone waterfall, Baizhang spring, and Jiulong waterfall.
+                 The Yellow Mountain Visiting Pine is a symbol of the warmth and friendship of the people of Anhui and carries the Oriental etiquette culture of embracing the world. Xu Xiake, a traveler in the Ming Dynasty, praised Huangshan: "There is no mountain as famous as Huangshan, 
+                 both inside and outside the Bo Hai. Climb Huangshan Mountain, there are no mountains in the world. 
+                 It was extended by later generations as "the five mountains do not see the return of the mountain, Huangshan do not see the return of the mountain".
+            </p>
+            <a href="#about" class="btn">Learn More</a><!-- 超连接，转到Id为 about的内容-->
+            <button type="button" onclick="myFunction()">翻译为中文</button><!-- 调用函数，将文字的内容修改为另一些文字-->
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="contentBx">
+            <h2 class="titleText">Feel The Beauty Of The World</h2>
+            <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex as commodo consequat<br>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex as commodo consequat
+                </p>
+                <a href="#destination" class="btn">Popular Destination</a><!-- 超连接，转到Id为 destination的内容-->
+        </div>
+        <div class="imgBx">
+            <img src="./image1/img1.jpg" class="fitBg" alt="">
+        </div>
+    </section>
+
+    <section class="banner2">
+        <img src="./image1/banner2.jpg" class="fitBg" alt="">
+    </section>
+
+    <section class="destination" id="destination">
+        <div class="content">
+            <h2 class="titleText">
+                    Most popular travel destinations in the world
+            </h2>
+            <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex as commodo consequat
+            </p>
+        </div>
+        <div class="destinationList">
+            <div class="box">
+                <div class="imgBx">
+                    <img src="/image1/destination1.jpg" class="fitBg" alt="">
+
+                </div>
+                <div class="content">
+                    <h2>Destination One<br><span>Country Name</span></h2>
+                </div>
+            </div>
+
+            <div class="box">
+                    <div class="imgBx">
+                        <img src="/image1/destination2.jpg" class="fitBg" alt="">
+    
+                    </div>
+                    <div class="content">
+                        <h2>Destination Two<br><span>Country Name</span></h2>
+                    </div>
+            </div>
+
+            <div class="box">
+                        <div class="imgBx">
+                            <img src="/image1/destination3.jpg" class="fitBg" alt="">
+        
+                        </div>
+                        <div class="content">
+                            <h2>Destination Three<br><span>Country Name</span></h2>
+                        </div>
+            </div>
+
+        </div>
+        <a href="#" class="btn">View More</a><!-- 超连接，转到顶部的内容-->
+    </section>
+    <section class="banner3">
+        <img src="./image1/banner3.jpg" class="fitBg" alt="">
+    </section>
+
+    <section class="footer">
+        <ul class="sci">
+            <li><a href="#"><img src="/image1/facebook.png" alt=""></a></li><!-- 超连接，转到顶部的内容-->
+            <li><a href="#"><img src="/image1/twitter.png" alt=""></a></li><!-- 超连接，转到顶部的内容-->
+            <li><a href="#"><img src="/image1/instagram.png" alt=""></a></li><!-- 超连接，转到顶部的内容-->
+        </ul>
+        <h4 class="copyrightText">Copyright  2020 <a href="#">Online Tutorials</a>.All rights</h4><!-- 超连接，转到顶部的内容-->
+    </section>
+
+
+    
+    <script>
+        function myFunction(){
+            document.getElementById("text1").innerHTML = "黄山：世界文化与自然双重遗产，世界地质公园，国家AAAAA级旅游景区，国家级风景名胜区，全国文明风景旅游区示范点，中华十大名山，天下第一奇山。黄山位于安徽省南部黄山市境内，有72峰，主峰莲花峰海拔1864米，与光明顶、天都峰并称三大黄山主峰，为36大峰之一。黄山是安徽旅游的标志。黄山原名“黟山”，因峰岩青黑，遥望苍黛而名。后因传说轩辕黄帝曾在此炼丹，故改名为“黄山”。黄山代表景观有“五绝三瀑”，五绝：奇松、怪石、云海、温泉、冬雪；三瀑：人字瀑、百丈泉、九龙瀑。黄山迎客松是安徽人民热情友好的象征，承载着拥抱世界的东方礼仪文化。明朝旅行家徐霞客登临黄山时赞叹：“薄海内外之名山，无如徽之黄山。登黄山，天下无山，观止矣！”被后人引申为“五岳归来不看山，黄山归来不看岳”。";
+        }//将文字内容进行修改
+      
+    </script>
+
+</body>
+
+</html>
